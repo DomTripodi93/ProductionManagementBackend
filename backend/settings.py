@@ -122,7 +122,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'production.ProUser'
 
 CORS_ORIGIN_WHITELIST = (
-    'https://myproductionmanager.firebaseapp.com',
+    'http://myproductionmanager.frontend.s3-website.us-east-2.amazonaws.com',
 )
 
 STATIC_ROOT = "static/"
