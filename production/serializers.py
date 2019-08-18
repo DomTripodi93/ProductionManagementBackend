@@ -1,4 +1,4 @@
-from .models import ProUser, Production, Machine, HourlyProduction, Part, ChangeLog
+from .models import UserSettings, ProUser, Production, Machine, HourlyProduction, Part, ChangeLog
 from rest_framework import serializers
 
 
@@ -26,6 +26,14 @@ class ProductionSerializer(serializers.HyperlinkedModelSerializer):
         model = Production
         fields = ('id', 'user_id', 'machine', 'shift', 'job', 'quantity','date', 'in_question')
         extra_kwargs = {'user_id' : {'read_only': True}}
+
+class UserSettingsSerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.HyperlinkedRelatedField(view_name='usersettings-detail', read_only=True)
+    class Meta:
+        model = UserSettings
+        fields = ('user', 'is_new')
+        extra_kwargs = {'user' : {'read_only': True}}
+    
 
 class MachineSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

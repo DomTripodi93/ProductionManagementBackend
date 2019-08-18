@@ -26,7 +26,7 @@ class ProUserManager(BaseUserManager):
 
 
 class ProUser(PermissionsMixin, AbstractBaseUser):
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique = True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default = True)
     is_staff = models.BooleanField(default = False)
@@ -45,6 +45,19 @@ class ProUser(PermissionsMixin, AbstractBaseUser):
     
     def __str__(self):
         return self.email
+
+class UserSettings(models.Model):
+    user = models.OneToOneField(ProUser, default='none', on_delete = models.CASCADE, primary_key=True)
+    is_new = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.user
+
+    def create_settings(sender, **kwargs):
+        if kwargs['created']:
+            settings = UserSettings.objects.create(user=kwargs['instance'])
+
+    post_save.connect(create_settings, sender=ProUser)
 
 class Production(models.Model):
     user = models.ForeignKey(ProUser,
@@ -106,13 +119,13 @@ class Part(models.Model):
         return self.part
     class Meta:
         verbose_name_plural = "Parts"
-        unique_together = (('machine', 'job'),)
+        unique_together = (('user', 'machine', 'job'),)
 
 class HourlyProduction(models.Model):
     user = models.ForeignKey(ProUser,
                              on_delete = models.CASCADE)
     machine = models.CharField(max_length=200)
-    hard_quantity = models.TextField(max_length=200, default='0')
+    hard_quantity = models.TextField(max_length=200, null=True, default='')
     counter_quantity = models.TextField(max_length=200, null=True, default='')
     job = models.TextField(max_length=50, null=True, default="")
     time = models.TimeField(auto_now_add=False)

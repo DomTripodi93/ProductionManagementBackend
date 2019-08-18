@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from django.conf import settings
 from django_filters import rest_framework as filter
 
-from .models import ProUser, Production, StartTime, Machine, Part, HourlyProduction, ChangeLog
-from .serializers import ProUserSerializer, StartTimeSerializer, ProductionSerializer, MachineSerializer, HourlyProductionSerializer, PartSerializer, ChangeLogSerializer
+from .models import UserSettings, ProUser, Production, StartTime, Machine, Part, HourlyProduction, ChangeLog
+from .serializers import ProUserSerializer, UserSettingsSerializer, StartTimeSerializer, ProductionSerializer, MachineSerializer, HourlyProductionSerializer, PartSerializer, ChangeLogSerializer
 from .permissions import ViewOwnProduction, UpdateOwnProUser, CreateOwnProduction, UpdateOwnProduction
 
 from rest_framework import status, viewsets, filters, generics
@@ -119,6 +119,13 @@ class RegisterViewSet(viewsets.ModelViewSet):
     queryset = ProUser.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (UpdateOwnProUser, )
+
+
+class UserSettingsViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSettingsSerializer
+    queryset = UserSettings.objects.all().order_by('-user')
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (UpdateOwnProduction, )
 
 class LoginViewSet(viewsets.ViewSet):
     serializer_class= AuthTokenSerializer

@@ -14,6 +14,7 @@ router.register('machine', views.MachineViewSet)
 router.register('part', views.PartViewSet)
 router.register('hourly', views.HourlyProductionViewSet)
 router.register('changelog', views.ChangeLogViewSet)
+router.register('usersettings', views.UserSettingsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
