@@ -36,7 +36,7 @@ supervisorctl restart production_management
 
 # Configure nginx
 cp $PROJECT_BASE_PATH/deploy/nginx_production_management.conf /etc/nginx/sites-available/production_management.conf
-rm /etc/nginx/sites-enabled/default
+
 ln -s /etc/nginx/sites-available/production_management.conf /etc/nginx/sites-enabled/production_management.conf
 systemctl restart nginx.service
 
