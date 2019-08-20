@@ -26,10 +26,10 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", 'k2hdgp^1&mFakeKey90mucu3vht2@tk')
 DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
 ALLOWED_HOSTS = [
-    "ec2-13-58-117-5.us-east-2.compute.amazonaws.com", 
-    "myproductionstatus-1686988022.us-east-2.elb.amazonaws.com",
     "127.0.0.1",
-    "myproducionstatus.com"
+    "ec2-18-222-94-127.us-east-2.compute.amazonaws.com",
+    "myproducionstatus.com",
+    "18.222.94.127"
     ]
 
 
